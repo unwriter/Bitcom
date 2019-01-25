@@ -1,0 +1,22 @@
+{
+  "name": "bitcom",
+  "version": "0.0.8",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha"
+  },
+  "bin": {
+    "bit": "./index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "datapay": "0.0.4",
+    "dotenv": "^6.2.0",
+    "qrcode-terminal": "^0.12.0"
+  },
+  "devDependencies": {
+    "mocha": "^5.2.0"
+  }
+}
