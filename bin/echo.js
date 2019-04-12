@@ -1,3 +1,8 @@
+/**********************************
+*
+* echo B to name
+*
+**********************************/
 const post = require('../lib/post')
 module.exports = function(params) {
   if (params.length === 3 && params[1] && params[1][0] === 'to' && params[2] && params[2].length === 1) {
