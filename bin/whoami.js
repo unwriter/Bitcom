@@ -20,7 +20,17 @@ module.exports = function() {
         } else {
           balance = info.balance
           console.log("\nbalance: ", info.balance)
-          console.log("\nCharge the address with small amount of Bitcoin SV to get started.\n\n")
+          console.log("\nOption 1. Charge the address with QR code, with small amount of Bitcoin SV to get started.\n")
+          let payload = {
+            "to": process.env.ADDRESS,
+            "editable": true,
+            "currency": "USD",
+            "type": "tip"
+          }
+          let str = JSON.stringify(payload);
+          let b64 = Buffer.from(str).toString("base64");
+          let url = "https://button.bitdb.network/#" + b64;
+          console.log("Option 2. Charge with Moneybutton:\n" + url + "\n");
         }
       });
     })
