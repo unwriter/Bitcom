@@ -1,10 +1,8 @@
 #!/usr/bin/env node
 const path = require('path')
+const fs = require('fs')
 require('dotenv').config({path: path.resolve(process.cwd(), '.bit')})
-const init = require('./init')
-const useradd = require('./useradd')
-const create = require('./create')
-const whoami = require('./whoami')
+const bin = {}
 const tokenize = function(tokens) {
   let result = []
   let bundle = []
@@ -24,33 +22,35 @@ const tokenize = function(tokens) {
 const parse = function(sequences) {
   console.log(sequences)
   let cmd = sequences[0][0]
-  if (cmd === 'init') {
-    init()
-  } else if (cmd === 'whoami') {
-    whoami()
-  } else if (cmd === 'useradd') {
-    useradd()
-  } else if (cmd === 'cat') {
-    // bit cat README.md to readme
-  } else if (cmd === 'echo') {
-    if (sequences.length === 3
-      && sequences[1] && sequences[1][0] === 'to'
-      && sequences[2] && sequences[2].length === 1) {
-        let content = sequences[0][1]
-        let filename = sequences[2][0]
-        console.log(content, filename)
-        create(filename, content)
-    }
+  console.log("cmd name = ", cmd)
+  return {
+    cmd: bin[cmd],
+    params: sequences
   }
 }
 if (require.main === module) {
   if (process.argv.length >= 3) {
-    let tok = tokenize(process.argv.slice(2))
-    parse(tok)
+    fs.readdir(__dirname + "/bin", async function(err, items) {
+      console.log("items = ", items)
+      for (let i=0; i<items.length; i++) {
+        let name = items[i].split('.')[0];
+        bin[name] = require(__dirname + "/bin/" + items[i])
+      }
+      console.log("bin = ", bin)
+      let tok = tokenize(process.argv.slice(2))
+      let program = parse(tok)
+      if (program) {
+        console.log("cmd = ", program.cmd)
+        console.log("params = ", program.params)
+        //program.cmd(program.params)
+        //program(sequences)
+      } else {
+        console.log("Error: command doesn't exist")
+      }
+    });
   }
 }
 module.exports = {
   tokenize: tokenize,
   parse: parse
 }
-
