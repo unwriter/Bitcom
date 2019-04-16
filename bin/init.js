@@ -9,6 +9,10 @@ const createKey = function() {
 }
 module.exports = function() {
   let _path = process.cwd() + "/.bit"
+  if (fs.existsSync(_path)) {
+    console.log("Bitcom already initiated. Use a folder with no .bit file.")
+    return;
+  }
   let stream = fs.createWriteStream(_path)
   let keys = createKey()
   stream.once('open', function(fd) {
