@@ -14,7 +14,7 @@ module.exports = function() {
     console.log("#################################################\n")
     qrcode.generate("bitcoin:"+process.env.ADDRESS, function(code) {
       console.log(code)
-      datapay.connect('https://bchsvexplorer.com').address(process.env.ADDRESS, function(err, info) {
+      datapay.connect().address(process.env.ADDRESS, function(err, info) {
         if (err) {
           console.log("Error: ", err)
         } else {
