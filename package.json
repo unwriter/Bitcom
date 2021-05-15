@@ -13,7 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.18.0",
-    "datapay": "0.0.12",
+    "datapay": "0.0.22",
     "dotenv": "^6.2.0",
     "qrcode-terminal": "^0.12.0"
   },
